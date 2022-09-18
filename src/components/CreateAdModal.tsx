@@ -1,9 +1,15 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Checkbox from '@radix-ui/react-checkbox';
+import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import { Input } from './Form/Input';
 import { Check, GameController } from 'phosphor-react';
+import { useState } from 'react';
+import { GroupToggle } from './GroupToggle';
+
 
 export function CreateAdModal() {
+    const [weekDays, setWeekDays] = useState<string[]>([])
+
     return (
         <Dialog.Portal>
           <Dialog.Overlay className='bg-black/60 inset-0 fixed'/>
@@ -13,8 +19,15 @@ export function CreateAdModal() {
 
             <form className='mt-8 flex flex-col gap-4'>
             <div className='flex flex-col gap-2'>
-              <label className='font-semibold' htmlFor='game'>Qual o game?</label>
-              <Input id='game' placeholder='Selecione o game que deseja jogar'  />
+                <label className='font-semibold' htmlFor='game'>Qual o game?</label>
+                <select 
+                    name='game'
+                    className='bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-500'
+                    id='game' 
+                >
+                    <option disabled value="">Selecione o game que deseja jogar</option>
+                    
+                </select>
             </div>
 
             <div className='flex flex-col gap-2'>
@@ -37,29 +50,16 @@ export function CreateAdModal() {
               <div className='flex flex-col gap-2'>
                 <label htmlFor='weekDays'>Quando constuma jogar?</label>
 
-                <div className='grid grid-cols-4 gap-2'>
-                  <button 
-                    className='w-8 h-8 rounded bg-zinc-900'
-                    title='Domingo'>D</button>
-                  <button 
-                    className='w-8 h-8 rounded bg-zinc-900'
-                    title='Segunda'>S</button>
-                  <button 
-                    className='w-8 h-8 rounded bg-zinc-900'
-                    title='Terça'>T</button>
-                  <button 
-                    className='w-8 h-8 rounded bg-zinc-900'
-                    title='Quarta'>Q</button>
-                  <button 
-                    className='w-8 h-8 rounded bg-zinc-900'
-                    title='Quinta'>Q</button>
-                  <button 
-                    className='w-8 h-8 rounded bg-zinc-900'
-                    title='Sexta'>S</button>
-                  <button 
-                    className='w-8 h-8 rounded bg-zinc-900'
-                    title='Sábado'>S</button>
-                </div>
+                <ToggleGroup.Root 
+                    className='grid grid-cols-4 gap-2' 
+                    type='multiple'
+                    value={weekDays}
+                    onValueChange={setWeekDays}
+                >      
+                            
+                    <GroupToggle value={weekDays} />
+                </ToggleGroup.Root>
+                
               </div>
               <div className='flex flex-col gap-2 flex-1'>
                 <label htmlFor='hourStart'>Qual horário do dia?</label>
@@ -70,14 +70,14 @@ export function CreateAdModal() {
               </div>
             </div>
 
-            <div className='mt-2 flex items-center gap-2 text-sm'>
+            <label className='mt-2 flex items-center gap-2 text-sm'>
                 <Checkbox.Root className='w-6 h-6 p-1 rounded bg-zinc-900'>
                     <Checkbox.Indicator>
                         <Check className='w-4 h-4 text-emerald-400' />
                     </Checkbox.Indicator>
                 </Checkbox.Root>
               Constumo me conectar ao chat de voz
-            </div>
+            </label>
 
             <footer className='mt-4 flex justify-end gap-4'>
               <Dialog.Close 

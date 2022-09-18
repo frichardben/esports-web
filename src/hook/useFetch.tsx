@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from 'axios'
 
 
 export function useFetch(url: string, options?: object) {
@@ -8,12 +9,11 @@ export function useFetch(url: string, options?: object) {
     useEffect(() => {
         setError(null);
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                setData(data)
-            })
-            .catch(err => setError(err))
+        axios(url)
+          .then(response => {
+            setData(response.data)
+          })
+          .catch(err => setError(err))
     },[])
 
     return {

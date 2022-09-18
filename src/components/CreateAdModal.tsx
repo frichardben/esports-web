@@ -3,12 +3,25 @@ import * as Checkbox from '@radix-ui/react-checkbox';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import { Input } from './Form/Input';
 import { Check, GameController } from 'phosphor-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GroupToggle } from './GroupToggle';
+import { useFetch } from '../hook/useFetch';
 
+interface Game {
+  id: string;
+  title: string;
+}
 
 export function CreateAdModal() {
     const [weekDays, setWeekDays] = useState<string[]>([])
+    const [games, setGames] = useState<Game[]>([])
+    const { data, error } = useFetch('http://localhost:3333/games');
+
+    useEffect(() => {
+      if(data) {
+        setGames(data)
+      }
+    },[data])
 
     return (
         <Dialog.Portal>
@@ -26,6 +39,10 @@ export function CreateAdModal() {
                     id='game' 
                 >
                     <option disabled value="">Selecione o game que deseja jogar</option>
+                    
+                    {games.map(game => {
+                       return <option key={game.id} value={game.id}>{game.title}</option>
+                    })}
                     
                 </select>
             </div>

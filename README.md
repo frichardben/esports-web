@@ -21,6 +21,7 @@ Platform that helps gamers find a partner to play their favorite game online.
 
 - [Git](https://git-scm.com/downloads)
 - [Node](https://nodejs.org/en/download/) _(version 16 or greater)_.
+- [Backend](https://github.com/frichardben/esports-server)
 
 ### :anchor: Installing
 
